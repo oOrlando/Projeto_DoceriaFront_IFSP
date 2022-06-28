@@ -1,11 +1,18 @@
 import { Container, Navbar, Nav, NavDropdown, Form, FormControl, Button, Carousel } from 'react-bootstrap'
-import { Link, useNavigate } from 'react-router-dom'
-import { GrUserAdd } from "react-icons/gr";
+import { useNavigate } from 'react-router-dom'
+import { GrUserAdd, GrUserExpert } from "react-icons/gr";
 import { BsFillCartFill } from "react-icons/bs";
 
 
 
 function HeaderStore() {
+  
+    const navegate = useNavigate();
+
+    function Logout(){
+        localStorage.clear();
+        navegate("/")   
+    }
 
     return (
         <>
@@ -13,11 +20,11 @@ function HeaderStore() {
             <div>
                 <Navbar bg="primary" expand="lg" variant="light">
                     <Container fluid>
-                        <Navbar.Brand href="#">Doceria</Navbar.Brand>
+                        <Navbar.Brand href="/">Doceria</Navbar.Brand>
                         <Navbar.Toggle aria-controls="navbarScroll" />
                         <Navbar.Collapse id="navbarScroll">
                             <Nav className="me-auto my-2 my-lg-0" style={{ maxHeight: '100px' }} navbarScroll>
-                                <Nav.Link href="#action1">Home</Nav.Link>
+                                <Nav.Link href="/">Home</Nav.Link>
                                 <Nav.Link href="#action2">Quem somos</Nav.Link>
                                 <NavDropdown title="Produtos" id="navbarScrollingDropdown">
                                     <NavDropdown.Item href="#action3">Doces</NavDropdown.Item>
@@ -27,12 +34,27 @@ function HeaderStore() {
                                 </NavDropdown>
 
                             </Nav>
-                            <NavDropdown title={<GrUserAdd size="20" />} >
-                                <NavDropdown.Item href="#action3">Login</NavDropdown.Item>
-                                <NavDropdown.Divider />
-                                <NavDropdown.Item href="#action5">Cadastrar</NavDropdown.Item>
+                            
+                            {
+                            !localStorage.getItem('user-info') ?
+                            <>
+                            <NavDropdown id="navbarScrollingDropdown" title= {<GrUserAdd size="25" />} >
+                                <NavDropdown.Item href="/login">Login</NavDropdown.Item>
+                                <NavDropdown.Item href="/register">Cadastrar</NavDropdown.Item>
+                             </NavDropdown>
+                       
+                            </>
+                            :
+                            <>
+                            <NavDropdown id="navbarScrollingDropdown" title= {<GrUserExpert size="25"/>} >
+                                <NavDropdown.Item onClick={Logout}>Sair</NavDropdown.Item>
                             </NavDropdown>
-                            <Nav.Link href="#action6"><BsFillCartFill size="20" color="black" /></Nav.Link>
+                         
+                            </>                      
+                            
+                            }
+                            
+                            <Nav.Link href="#action6"><BsFillCartFill size="25" color="black" /></Nav.Link>
 
                             <Form className="d-flex">
                                 <FormControl type="search" placeholder="Pesquisar" className="me-2" aria-label="Pesquisar" />

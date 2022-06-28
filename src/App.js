@@ -22,7 +22,7 @@ function App() {
         {/* <Header /> */}
         {/*<h1>Doceria Front-End</h1>*/}      
           <Routes>
-              <Route path="/login" element={<Login />} />
+              <Route path="/login" element={<Protected Cmp={Login} />} />
               <Route path="/register" element={<Protected Cmp={Register} />} />
               <Route path="/admin" element={<Protected Cmp={ProductList} />} />
               <Route path="/update/:id" element={<Protected Cmp={UpdateProduct} />} />

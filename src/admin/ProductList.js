@@ -1,44 +1,53 @@
 import Header from './Header'
-import React, { useState, useEffect } from 'react'
+import ApiProduto from '../apis/ApiProduto.js'
+import {React, useState, useEffect} from 'react'
 import { Table } from 'react-bootstrap'
-import Button from 'react-bootstrap/Button';
+import Button from 'react-bootstrap/Button'
 import {Link} from 'react-router-dom'
+import {useNavigate} from 'react-router-dom'
+
 
 function ProductList() {
+
     const [data, setData] = useState([]);
+    let user=JSON.parse(localStorage.getItem("user-info"));
+    const navegate=useNavigate();
 
     useEffect( () => {
-            getData();        
+        if (localStorage.getItem("user-info") && user.tipousuario==="admin"){
+            getData();    
+        }
+        else if (localStorage.getItem("user-info") && user.tipousuario==="client") {
+            navegate("/")
+        } else {
+            navegate("/login")
+        }
+               
     },[])
 
     
     async function getData(){
-            let result = await fetch("http://localhost:80/api/listProduct");
-            result = await result.json();
-            setData(result)
+     
+        let result = await ApiProduto.list();
+       
+        setData(result)
 
     }
 
     async function deleteOperation(id){
-        let result = await fetch("http://localhost:80/api/deleteProduct/"+id,{
-            method:"DELETE"
-        });
-        result = await result.json();
+        
+        let result = await ApiProduto.delete(id);
         console.warn(result);
         getData();
     }
 
     async function search(key){
         if(key){
-            console.warn(key);
-            let result = await fetch("http://localhost:80/api/search/"+key);
-            result = await result.json();
-            setData(result)
+            let result = await ApiProduto.seach(key);
+            setData(result);
         }
         else{
-            let result = await fetch("http://localhost:80/api/listProduct");
-            result = await result.json();
-            setData(result)
+            getData()
         }        
     }
 

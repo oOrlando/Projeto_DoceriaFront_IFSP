@@ -1,51 +1,65 @@
 
 import Header from './admin/Header'
-
+import HeaderStore from './client/HeaderStore'
+import ApiUsuario from './apis/ApiUsuario';
 import React ,{useState, useEffect} from 'react'
 import {useNavigate} from 'react-router-dom'
 
 function Register()
 {
+    
+
     useEffect(()=>{
-        if(!localStorage.getItem('user-info'))
-        {
-            navegate("/login")
-        }
+
 
     },[])
+
+    let user=JSON.parse(localStorage.getItem("user-info"))
+    const navegate=useNavigate();
+
     const [nome,setNome]=useState("")
     const [cpf,setCpf]=useState("")
     const [email,setEmail]=useState("")
     const [senha,setSenha]=useState("")
     const [datanascimento,setDatanascimento]=useState("")
-    const [sexo, setSexo]=useState('M')
-    const navegate=useNavigate();
+    const [telefone, setTelefone]=useState("")
+    let tipousuario="";
 
     async function cadastra(e)
     {
         e.preventDefault();
-        let registro={nome, cpf, email, senha, datanascimento, sexo}
+    
+        if (localStorage.getItem('user-info') && user.tipousuario==="admin")
+        {
+            tipousuario = "admin";
+        }else {
+            tipousuario = "client";
+        }
+        let registro={nome, cpf, email, senha, datanascimento, telefone, tipousuario}
 
-        console.warn(registro)
-
-        let result = await fetch("http://localhost:80/api/register",{
-            method: 'POST',
-            body:JSON.stringify(registro),
-            headers:{
-                "Content-Type":'application/json',
-                "Accept":'application/json'
-            }
-        })
-
-        result = await result.json()
-        navegate("/")
-        
+        ApiUsuario.cadastra(registro)
+       
+        navegate("/")       
 
     }
     
+    
     return(
         <>
-        <Header />
+        {
+            localStorage.getItem('user-info') && user.tipousuario==="admin" ?
+            <>
+            <Header />            
+            </>
+            :
+            <>
+             <HeaderStore /> 
+            </>
+
+
+        }        
+        
+        
         <div className="col-sm-6 offset-sm-3">
             <h1>Cadastrar usuário</h1>
             <form onSubmit={cadastra}>
@@ -59,15 +73,12 @@ function Register()
                 <br />
                 <input type="date" required="required" value={datanascimento} onChange={(e)=>setDatanascimento(e.target.value)} className="form-control" placeholder="Data de nascimento" />
                 <br />             
-                <div onClick={(e)=>setSexo(e.target.value)} className="col-sm-6 offset-sm-3">
-                    <label>Sexo: </label>
-                    <input type="radio" value="M" name="sexo" defaultChecked /> Masculino
-                    <input type="radio" value="F" name="sexo" /> Feminino
-                </div>
+                <input type="text" required="required" value={telefone} onChange={(e)=>setTelefone(e.target.value)} className="form-control" placeholder="Telefone" />
                 <br />  
                 <button type="submit" className="btn btn-primary">Cadastrar</button>   
             </form> 
         </div>
+           
         </>
     )
 }
