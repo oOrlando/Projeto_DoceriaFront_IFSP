@@ -1,14 +1,15 @@
-import Header from './Header'
 
-import React ,{useState, useEffect} from 'react'
-import {useNavigate} from 'react-router-dom'
+
+import React ,{ useEffect} from 'react'
+
 
 function Protected(props)
 
 {
-    let user=JSON.parse(localStorage.getItem("user-info"))
+
     let Cmp=props.Cmp   
-    const navegate=useNavigate();
+  
+
     useEffect(()=>{
         
               

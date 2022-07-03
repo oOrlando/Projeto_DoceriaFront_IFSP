@@ -37,9 +37,14 @@ function Register()
         }
         let registro={nome, cpf, email, senha, datanascimento, telefone, tipousuario}
 
-        ApiUsuario.cadastra(registro)
-       
-        navegate("/")       
+        let local = await ApiUsuario.cadastra(registro)
+
+        if (tipousuario==="admin"){
+            navegate("/admin") 
+
+        }
+        localStorage.setItem("user-info", JSON.stringify(local));
+        navegate("/address")       
 
     }
     
@@ -61,7 +66,7 @@ function Register()
         
         
         <div className="col-sm-6 offset-sm-3">
-            <h1>Cadastrar usuário</h1>
+            <h1>Cadastrar</h1>
             <form onSubmit={cadastra}>
                 <input type="text" required="required" value={nome} onChange={(e)=>setNome(e.target.value)} className="form-control" placeholder="Nome" />
                 <br />

@@ -1,4 +1,4 @@
-const apiBase = "http://localhost:80/api/"
+const apiBase = "https://projeto-doceria-li2jvfi4ma-rj.a.run.app/api/"
 
 
 const ApiUsuario = {

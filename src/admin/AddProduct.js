@@ -1,9 +1,10 @@
 import Header from './Header'
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import ApiProduto from '../apis/ApiProduto';
 
 function AddProduct() {
-    
+
 
     const [preco, setPreco] = useState("");
     const [nome, setNome] = useState("");
@@ -28,15 +29,8 @@ function AddProduct() {
         formData.append('estoque_maximo', estoque_maximo);
         formData.append('qtd_estoque', estoque_atual);
 
-        let result = await fetch("http://localhost:80/api/addProduct", {
-            method: "POST",
-            body: formData
-        })
-
-            alert("Produto salvo com sucesso")
-            navegate("/admin")
-            console.warn(result)
-
+        ApiProduto.register(formData)
+        navegate("/admin")
     }
 
     return (

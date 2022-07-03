@@ -1,7 +1,18 @@
-const apiBase = "http://localhost:80/api/";
+const apiBase = "https://projeto-doceria-li2jvfi4ma-rj.a.run.app/api/";
 
 
 const ApiProduto = {
+
+    register:async(formData) => {
+        let result = await fetch(apiBase+"addProduct", {
+            method: "POST",
+            body: formData
+        })
+
+        return result;
+           
+          
+    },
 
     list:async() => {
 

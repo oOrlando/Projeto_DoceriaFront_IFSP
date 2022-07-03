@@ -15,7 +15,7 @@ function UpdateProduct() {
     const navegate = useNavigate();
 
     async function getData() {
-        let result = await fetch("http://localhost:80/api/getProduct/" + Number.parseInt(id));
+        let result = await fetch("https://projeto-doceria-li2jvfi4ma-rj.a.run.app/api/getProduct/" + Number.parseInt(id));
         result = await result.json();
         setData(result);
         setPreco(result.preco);
@@ -44,7 +44,7 @@ function UpdateProduct() {
         formData.append('estoque_maximo', estoque_maximo);
         formData.append('qtd_estoque', qtd_estoque);
 
-        let result = await fetch("http://localhost:80/api/updateProduct/"+id+"?_method=PUT", {
+        let result = await fetch("https://projeto-doceria-li2jvfi4ma-rj.a.run.app/api/updateProduct/"+id+"?_method=PUT", {
             method: "POST",
             body: formData
         });

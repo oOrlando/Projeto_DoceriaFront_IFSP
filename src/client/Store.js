@@ -5,30 +5,42 @@ import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import { React, useState, useEffect } from 'react'
 import ApiProduto from '../apis/ApiProduto'
+/* import ApiPedido from '../apis/ApiPedido' */
+import {useNavigate} from 'react-router-dom'
 
 function Store() {
 
 
     const [data, setData] = useState([]);
     const [show, setShow] = useState(false);
+
+
     const [itens, setItens] = useState([]);
     const [total, setTotal] = useState(0)
 
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
 
-
+    /* let user=JSON.parse(localStorage.getItem("user-info")) */
+    const navegate=useNavigate();
 
     useEffect(() => {
         getData()
 
-    }, [itens, total])
-
+    }, [total])
+    
 
     async function getData() {
 
+        if (localStorage.getItem('itens-info') && itens.length === 0){
+            setItens(JSON.parse(localStorage.getItem('itens-info')))    
+        }
+
         let result = await ApiProduto.list();
         setData(result)
+        
+        
+        console.warn(result)
 
     }
 
@@ -80,7 +92,7 @@ function Store() {
     async function remover(id) {
 
         for (let i = 0; i < itens.length; i++) {
-            if (itens[i].id == id) {
+            if (itens[i].id === id) {
                 itens.splice(i, 1)
             }
         }
@@ -91,7 +103,7 @@ function Store() {
     async function quantidade(id, valor) {
 
         for (let i = 0; i < itens.length; i++) {
-            if (itens[i].id == id) {
+            if (itens[i].id === id) {
 
                 itens[i].qtd = parseInt(valor)
                 itens[i].subtotal = itens[i].preco * parseInt(valor)
@@ -109,6 +121,29 @@ function Store() {
         setTotal(soma)
 
     }
+
+    async function finish(){
+        let now = new Date()
+        let mes = parseInt(now.getMonth())+1
+        let datacompra = (now.getFullYear()+"-"+mes+"-"+now.getDate()) 
+        
+        let situacao = "carrinho";
+       
+        /* let usuario_id = Number(user.id)  */
+                 
+        let valor = total 
+        let registro = {datacompra, valor, situacao/* , usuario_id */}
+
+        localStorage.setItem("request-info", JSON.stringify(registro));
+        localStorage.setItem("itens-info", JSON.stringify(itens));
+        /* ApiPedido.register(registro) */
+        console.warn(registro)
+        navegate("/request") 
+
+
+    }
+
+    
 
     return (
 
@@ -146,6 +181,7 @@ function Store() {
                         <Modal.Title>Carrinho</Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
+                    
                         <Table className="table-striped ">
                             <tbody>
                                 <tr>
@@ -179,9 +215,9 @@ function Store() {
                     </Modal.Body>
                     <Modal.Footer>
                         <Button variant="secondary" onClick={handleClose}>
-                            Fechar
+                            Continuar Comprando
                         </Button>
-                        <Button variant="primary">Finalizar Pedido</Button>
+                        <Button variant="outline-success" onClick={() => finish()}>Finalizar Compra</Button>                      
                     </Modal.Footer>
                 </Modal>
 
