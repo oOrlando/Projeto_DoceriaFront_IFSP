@@ -77,7 +77,7 @@ function ProductList() {
                         data.map((item) =>
                             <tr key={Math.random()}>
                                 <td>{item.id}</td>
-                                <td><img style={{ width: 60 }} src={"http://localhost/" + item.imagem} /></td>                               
+                                <td><img style={{ width: 60 }} src={"https://projeto-doceria-li2jvfi4ma-rj.a.run.app/" + item.imagem} /></td>                               
                                 <td>R$ {item.preco}</td>
                                 <td>{item.nome}</td>
                                 <td>{item.descrição}</td>

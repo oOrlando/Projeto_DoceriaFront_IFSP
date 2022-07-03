@@ -60,7 +60,7 @@ function UpdateProduct() {
             <div>
                 <h1>Atualizar Produto</h1>
                 <div className="col-sm-6 offset-sm-3">
-                    <img src={"http://localhost/" + data.imagem} style={{ width: 300 }} />
+                    <img src={"https://projeto-doceria-li2jvfi4ma-rj.a.run.app/" + data.imagem} style={{ width: 300 }} />
                     <form onSubmit={(e)=>editProduct(data.id, e)}>
                         <input type="number" required="required" step="any" onChange={(e) => setPreco(e.target.value)} defaultValue={data.preco} className="form-control" />
                         <br />

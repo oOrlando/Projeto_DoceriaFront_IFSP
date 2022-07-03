@@ -158,7 +158,7 @@ function Store() {
                             data.map((itemdata) =>
                                 <Col key={Math.random()}>
                                     <Card style={{ width: '18rem' }}>
-                                        <Card.Img variant="top" style={{ height: 200 }} src={"http://localhost/" + itemdata.imagem} />
+                                        <Card.Img variant="top" style={{ height: 200 }} src={"https://projeto-doceria-li2jvfi4ma-rj.a.run.app/" + itemdata.imagem} />
                                         <Card.Body>
                                             <Card.Title>{itemdata.nome}</Card.Title>
                                             <Card.Text>
@@ -196,7 +196,7 @@ function Store() {
 
                                     itens.map((item) =>
                                         <tr key={Math.random()}>
-                                            <td><img style={{ width: 60 }} src={"http://localhost/" + item.imagem} /></td>
+                                            <td><img style={{ width: 60 }} src={"https://projeto-doceria-li2jvfi4ma-rj.a.run.app/" + item.imagem} /></td>
                                             <td>R$ {item.preco.toFixed(2).toString().replace(".", ",")}</td>
                                             <td>{item.nome}</td>
                                             <td className="w-25">
