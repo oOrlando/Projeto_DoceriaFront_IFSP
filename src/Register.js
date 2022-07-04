@@ -68,17 +68,28 @@ function Register()
         <div className="col-sm-6 offset-sm-3">
             <h1>Cadastrar</h1>
             <form onSubmit={cadastra}>
-                <input type="text" required="required" value={nome} onChange={(e)=>setNome(e.target.value)} className="form-control" placeholder="Nome" />
+               
+                <input type="text" pattern="^[a-zA-Z]{4,}(?: [a-zA-Z]+){0,2}$" title="Apenas Letras"
+                required="required" value={nome} onChange={(e)=>setNome(e.target.value)} className="form-control" placeholder="Nome" />
                 <br />
-                <input type="text" required="required" value={cpf} onChange={(e)=>setCpf(e.target.value)} className="form-control" placeholder="CPF" />
+                
+                <input type="text" pattern="\d{3}\.\d{3}\.\d{3}-\d{2}" title="999.999.999-99"
+                required="required" value={cpf} onChange={(e)=>setCpf(e.target.value)} className="form-control" placeholder="CPF no formato 999.999.999-99" />
                 <br />
-                <input type="email" required="required" value={email} onChange={(e)=>setEmail(e.target.value)} className="form-control" placeholder="E-mail" />
+                
+                <input type="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" title="email@email.com"
+                required="required" value={email} onChange={(e)=>setEmail(e.target.value)} className="form-control" placeholder="E-mail" />
                 <br />
-                <input type="password" required="required" value={senha} onChange={(e)=>setSenha(e.target.value)} className="form-control" placeholder="Senha" />
+                
+                <input type="password" required="required" minLength="6"
+                value={senha} onChange={(e)=>setSenha(e.target.value)} className="form-control" placeholder="Senha com no mínimo 6 dígitos" />
                 <br />
-                <input type="date" required="required" value={datanascimento} onChange={(e)=>setDatanascimento(e.target.value)} className="form-control" placeholder="Data de nascimento" />
+                
+                <input type="date" pattern="[0-9]{2}\/[0-9]{2}\/[0-9]{4}$"
+                required="required" value={datanascimento} onChange={(e)=>setDatanascimento(e.target.value)} className="form-control" placeholder="Data de nascimento" />
                 <br />             
-                <input type="text" required="required" value={telefone} onChange={(e)=>setTelefone(e.target.value)} className="form-control" placeholder="Telefone" />
+                <input type="text" pattern="\([0-9]{2}\) [0-9]{4,6}-[0-9]{4}$" title="(99) 99999-9999"
+                required="required" value={telefone} onChange={(e)=>setTelefone(e.target.value)} className="form-control" placeholder="Telefone no formato (99) 99999-9999" />
                 <br />  
                 <button type="submit" className="btn btn-primary">Cadastrar</button>   
             </form> 
