@@ -40,15 +40,20 @@ function AddProduct() {
                 <h1>Cadastrar Produto</h1>
                 <div className="col-sm-6 offset-sm-3">
                     <form onSubmit={cadastra}>
-                        <input type="number" required="required" step="any" onChange={(e) => setPreco(e.target.value)} className="form-control" placeholder="Preço" />
+                        <input type="number" pattern="([0-9]{1,3}\.)?[0-9]{1,3},[0-9]{2}$" title="99,99"
+                        required="required" step="any" onChange={(e) => setPreco(e.target.value)} className="form-control" placeholder="Preço" />
                         <br />
-                        <input type="text" required="required" onChange={(e) => setNome(e.target.value)} className="form-control" placeholder="Nome" />
+                        <input type="text" pattern="^[a-zA-Z]{4,}(?: [a-zA-Z]+){0,2}$" title="Apenas Letras"
+                        required="required" onChange={(e) => setNome(e.target.value)} className="form-control" placeholder="Nome" />
                         <br />
-                        <input type="file" required="required" onChange={(e) => setImagem(e.target.files[0])} className="form-control" placeholder="Imagem" />
+                        <input type="file" 
+                        required="required" onChange={(e) => setImagem(e.target.files[0])} className="form-control" placeholder="Imagem" />
                         <br />
-                        <input type="textarea" required="required" onChange={(e) => setDescricao(e.target.value)} className="form-control" placeholder="Descrição" />
+                        <input type="textarea" 
+                        required="required" onChange={(e) => setDescricao(e.target.value)} className="form-control" placeholder="Descrição" />
                         <br />
-                        <input type="number" required="required" onChange={(e) => setEstmin(e.target.value)} className="form-control" placeholder="Estoque Mínimo" />
+                        <input type="number" 
+                        required="required" onChange={(e) => setEstmin(e.target.value)} className="form-control" placeholder="Estoque Mínimo" />
                         <br />
                         <input type="number" required="required" onChange={(e) => setEstMax(e.target.value)} className="form-control" placeholder="Estoque Máximo" />
                         <br />
