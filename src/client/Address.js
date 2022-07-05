@@ -56,17 +56,21 @@ function Address() {
             <div className="col-sm-6 offset-sm-3">
                 <h1>Cadastrar Endereço</h1>
                 <form onSubmit={cadastra}>
-                    <input type="text" required="required" value={logradouro} onChange={(e) => setLogradouro(e.target.value)} className="form-control" placeholder="Logradouro" />
+                    <input type="text" minLength="3"
+                    required="required" value={logradouro} onChange={(e) => setLogradouro(e.target.value)} className="form-control" placeholder="Logradouro" />
                     <br />
-                    <input type="number" required="required" value={numero} onChange={(e) => setNumero(e.target.value)} className="form-control" placeholder="Nº" />
+                    <input type="number" 
+                    required="required" value={numero} onChange={(e) => setNumero(e.target.value)} className="form-control" placeholder="Nº" />
                     <br />
                     <input type="text" required="required" value={complemento} onChange={(e) => setComplemento(e.target.value)} className="form-control" placeholder="Complemento" />
                     <br />
                     <input type="text" required="required" value={bairro} onChange={(e) => setBairro(e.target.value)} className="form-control" placeholder="Bairro" />
                     <br />
-                    <input type="text" required="required" value={cidade} onChange={(e) => setCidade(e.target.value)} className="form-control" placeholder="Cidade" />
+                    <input type="text" pattern="^[a-zA-Z]{4,}(?: [a-zA-Z]+){0,2}$" title="Apenas Letras"
+                    equired="required" value={cidade} onChange={(e) => setCidade(e.target.value)} className="form-control" placeholder="Cidade" />
                     <br />
-                    <input type="text" required="required" value={cep} onChange={(e) => setCep(e.target.value)} className="form-control" placeholder="CEP" />
+                    <input type="text" pattern= "\d{5}-?\d{3}" title="99999-999"
+                    required="required" value={cep} onChange={(e) => setCep(e.target.value)} className="form-control" placeholder="CEP no formato 99999-999" />
                     <br />
                     <button type="submit" className="btn btn-primary">Cadastrar</button>
                 </form>
