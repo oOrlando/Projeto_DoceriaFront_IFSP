@@ -62,9 +62,11 @@ function UpdateProduct() {
                 <div className="col-sm-6 offset-sm-3">
                     <img src={"https://projeto-doceria-li2jvfi4ma-rj.a.run.app/" + data.imagem} style={{ width: 300 }} />
                     <form onSubmit={(e)=>editProduct(data.id, e)}>
-                        <input type="number" required="required" step="any" onChange={(e) => setPreco(e.target.value)} defaultValue={data.preco} className="form-control" />
+                        <input type="number" pattern="([0-9]{1,3}\.)?[0-9]{1,3},[0-9]{2}$" title="99,99"
+                        required="required" step="any" onChange={(e) => setPreco(e.target.value)} defaultValue={data.preco} className="form-control" />
                         <br />
-                        <input type="text" required="required" onChange={(e) => setNome(e.target.value)} defaultValue={data.nome} className="form-control" />
+                        <input type="text" pattern="^[a-zA-Z]{4,}(?: [a-zA-Z]+){0,2}$" title="Apenas Letras"
+                        required="required" onChange={(e) => setNome(e.target.value)} defaultValue={data.nome} className="form-control" />
                         <br />
                         <input type="file" onChange={(e) => setImagem(e.target.files[0])} defaultValue={data.imagem} className="form-control" placeholder="Imagem" />
                         <br />
