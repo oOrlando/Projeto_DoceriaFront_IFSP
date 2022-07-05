@@ -2,7 +2,8 @@ import './App.css';
 import {
   BrowserRouter,
   Routes,
-  Route} from 'react-router-dom'
+  Route
+} from 'react-router-dom'
 import Login from './Login'
 import Register from './Register'
 import UpdateProduct from './admin/UpdateProduct'
@@ -19,18 +20,27 @@ function App() {
     <div className="App">
       <BrowserRouter>
         {/* <Header /> */}
-        {/*<h1>Doceria Front-End</h1>*/}      
-          <Routes>
-              <Route path="/login" element={<Protected Cmp={Login} />} />
-              <Route path="/register" element={<Protected Cmp={Register} />} />
-              <Route path="/admin" element={<Protected Cmp={ProductList} />} />
-              <Route path="/update/:id" element={<Protected Cmp={UpdateProduct} />} />
-              <Route path="/add" element={<Protected Cmp={AddProduct} />} />
-              <Route path="/address" element={<Protected Cmp={Address} />} />
-              <Route path="/request" element={<Protected Cmp={Request} />} />
+        {/*<h1>Doceria Front-End</h1>*/}
+        <Routes>
+          <Route path="/login" element={<Protected Cmp={Login} />} />
+          <Route path="/register" element={<Protected Cmp={Register} />} >
+            <Route path="/register/:ca" element={<Protected Cmp={Register} />} />
+          </Route>
+          <Route path="/admin" element={<Protected Cmp={ProductList} />} />
+          <Route path="/update/:id" element={<Protected Cmp={UpdateProduct} />} />
+          <Route path="/add" element={<Protected Cmp={AddProduct} />} />
+          
+          <Route path="/address" element={<Protected Cmp={Address} />}>
+            <Route path="/address/:ca" element={<Protected Cmp={Address} />} />
+          </Route>
+         
+         <Route path="/request" element={<Protected Cmp={Request} />} />
 
-              <Route path="/" element={<Store />} />
-          </Routes> 
+          <Route path="/" element={<Store />} >
+            <Route path='/:key' element={<Store />} />
+          </Route>
+
+        </Routes>
       </BrowserRouter>
     </div>
   );

@@ -3,18 +3,15 @@ import Header from './admin/Header'
 import HeaderStore from './client/HeaderStore'
 import ApiUsuario from './apis/ApiUsuario';
 import React ,{useState, useEffect} from 'react'
-import {useNavigate} from 'react-router-dom'
+import {useNavigate, useParams} from 'react-router-dom'
 
 function Register()
 {
     
 
-    useEffect(()=>{
-
-
-    },[])
-
+    
     let user=JSON.parse(localStorage.getItem("user-info"))
+    const { ca } = useParams();
     const navegate=useNavigate();
 
     const [nome,setNome]=useState("")
@@ -44,9 +41,22 @@ function Register()
 
         }
         localStorage.setItem("user-info", JSON.stringify(local));
-        navegate("/address")       
+        if (ca == null){
+            navegate("/address") 
+
+        }else{
+            navegate("/address/"+ca) 
+
+        }
+              
 
     }
+
+    useEffect(()=>{
+
+
+    },[])
+
     
     
     return(

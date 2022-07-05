@@ -1,10 +1,8 @@
 import Header from './Header'
 import ApiProduto from '../apis/ApiProduto.js'
 import {React, useState, useEffect} from 'react'
-import { Table } from 'react-bootstrap'
-import Button from 'react-bootstrap/Button'
-import {Link} from 'react-router-dom'
-import {useNavigate} from 'react-router-dom'
+import { Col, Row, Container, Button } from 'react-bootstrap'
+import {Link, useNavigate} from 'react-router-dom'
 
 
 function ProductList() {
@@ -59,43 +57,46 @@ function ProductList() {
                     <input type="search" onChange={(e)=>search(e.target.value)} className="form-control" placeholder="Pesquisar" />
                     <br />
             </div>
-            <div className="col-sm-12">
-                <Table>
-                    <tbody>
-                    <tr>
-                        <td><strong>ID</strong></td>
-                        <td><strong>Foto</strong></td>
-                        <td><strong>Preço</strong></td>
-                        <td><strong>Nome</strong></td>
-                        <td><strong>Descrição</strong></td>
-                        <td><strong>Estoque Mínimo</strong></td>
-                        <td><strong>Estoque Máximo</strong></td>
-                        <td><strong>Estoque Atual</strong></td>
-                        <td><strong>Operações</strong></td>
-                    </tr>
+           
+                <Container>
+                
+                    <Row>
+                        <Col><strong>ID</strong></Col>
+                        <Col><strong>Foto</strong></Col>
+                        <Col><strong>Preço</strong></Col>
+                        <Col><strong>Nome</strong></Col>
+                        <Col><strong>Descrição</strong></Col>
+                        <Col><strong>Estoque Mínimo</strong></Col>
+                        <Col><strong>Estoque Máximo</strong></Col>
+                        <Col><strong>Estoque Atual</strong></Col>
+                        <Col sm={3}><strong>Operações</strong></Col>
+                    </Row>
                     {
                         data.map((item) =>
-                            <tr key={Math.random()}>
-                                <td>{item.id}</td>
-                                <td><img style={{ width: 60 }} src={"https://doceria.s3.sa-east-1.amazonaws.com/" + item.imagem} /></td>                               
-                                <td>R$ {item.preco}</td>
-                                <td>{item.nome}</td>
-                                <td>{item.descrição}</td>
-                                <td>{item.estoque_minimo}</td>
-                                <td>{item.estoque_maximo}</td>
-                                <td>{item.qtd_estoque}</td>
-                                <td className='col-sm-2'>
+                            <Row key={Math.random()}>
+                                <Col>{item.id}</Col>
+                                <Col><img style={{ width: 60 }} src={"https://doceria.s3.sa-east-1.amazonaws.com/" + item.imagem} /></Col>                               
+                                <Col>R$ {item.preco}</Col>
+                                <Col>{item.nome}</Col>
+                                <Col>{item.descrição}</Col>
+                                <Col>{item.estoque_minimo}</Col>
+                                <Col>{item.estoque_maximo}</Col>
+                                <Col>{item.qtd_estoque}</Col>
+                                <Col>
                                     <Link to={"../update/"+item.id}>
                                         <Button variant="outline-success">Editar</Button>
                                     </Link>
-                                    <Button variant="outline-danger" onClick={()=>deleteOperation(item.id)}>Excluir</Button>                                
-                                </td>
-                            </tr>
+                                                                 
+                                </Col>
+                                <Col>
+                                <Button variant="outline-danger" onClick={()=>deleteOperation(item.id)}>Excluir</Button>   
+                                </Col>
+                            </Row>
                         )
                     }
-                    </tbody>
-                </Table>
-            </div>
+                   
+                </Container>
+   
 
 
         </div>

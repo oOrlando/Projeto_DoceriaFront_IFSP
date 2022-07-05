@@ -1,16 +1,16 @@
 import HeaderStore from './HeaderStore'
 import Container from 'react-bootstrap/Container'
-import { Card, Button, Modal, Table } from 'react-bootstrap'
+import { Card, Button, Modal } from 'react-bootstrap'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import { React, useState, useEffect } from 'react'
 import ApiProduto from '../apis/ApiProduto'
 /* import ApiPedido from '../apis/ApiPedido' */
-import {useNavigate} from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 
 function Store() {
 
-
+    const { key } = useParams();
     const [data, setData] = useState([]);
     const [show, setShow] = useState(false);
 
@@ -22,25 +22,27 @@ function Store() {
     const handleShow = () => setShow(true);
 
     /* let user=JSON.parse(localStorage.getItem("user-info")) */
-    const navegate=useNavigate();
+    const navegate = useNavigate();
 
     useEffect(() => {
         getData()
 
     }, [total])
-    
+
 
     async function getData() {
 
-        if (localStorage.getItem('itens-info') && itens.length === 0){
-            setItens(JSON.parse(localStorage.getItem('itens-info')))    
+        if (localStorage.getItem('itens-info') && itens.length === 0) {
+            setItens(JSON.parse(localStorage.getItem('itens-info')))
+        }
+        if (key == null) {
+            let result = await ApiProduto.list();
+            setData(result)
+        }else {
+            let result = await ApiProduto.seach(key);
+            setData(result)
         }
 
-        let result = await ApiProduto.list();
-        setData(result)
-        
-        
-        console.warn(result)
 
     }
 
@@ -79,13 +81,10 @@ function Store() {
 
             }
 
-
-
-
         }
         getTotal()
         handleShow();
-        console.warn(itens)
+
 
     }
 
@@ -95,6 +94,10 @@ function Store() {
             if (itens[i].id === id) {
                 itens.splice(i, 1)
             }
+        }
+        if (itens.length === 0) {
+            localStorage.removeItem("itens-info")
+            localStorage.removeItem("request-info")
         }
         getTotal()
 
@@ -122,28 +125,31 @@ function Store() {
 
     }
 
-    async function finish(){
+    async function finish(nav) {
         let now = new Date()
-        let mes = parseInt(now.getMonth())+1
-        let datacompra = (now.getFullYear()+"-"+mes+"-"+now.getDate()) 
-        
+        let mes = parseInt(now.getMonth()) + 1
+        let datacompra = (now.getFullYear() + "-" + mes + "-" + now.getDate())
+
         let situacao = "carrinho";
-       
+
         /* let usuario_id = Number(user.id)  */
-                 
-        let valor = total 
-        let registro = {datacompra, valor, situacao/* , usuario_id */}
+
+        let valor = total
+        let registro = { datacompra, valor, situacao/* , usuario_id */ }
 
         localStorage.setItem("request-info", JSON.stringify(registro));
         localStorage.setItem("itens-info", JSON.stringify(itens));
         /* ApiPedido.register(registro) */
-        console.warn(registro)
-        navegate("/request") 
+        if (nav === 0) {
+            handleClose()
 
+        } else {
+            navegate("/request")
+        }
 
     }
 
-    
+
 
     return (
 
@@ -181,43 +187,43 @@ function Store() {
                         <Modal.Title>Carrinho</Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
-                    
-                        <Table className="table-striped ">
-                            <tbody>
-                                <tr>
-                                    <td><strong>Foto</strong></td>
-                                    <td><strong>Preço</strong></td>
-                                    <td><strong>Produto</strong></td>
-                                    <td><strong>Quantidade</strong></td>
-                                    <td><strong>Subtotal</strong></td>
-                                    <td><strong>Remover</strong></td>
-                                </tr>
-                                {
 
-                                    itens.map((item) =>
-                                        <tr key={Math.random()}>
-                                            <td><img style={{ width: 60 }} src={"https://doceria.s3.sa-east-1.amazonaws.com/" + item.imagem} /></td>
-                                            <td>R$ {item.preco.toFixed(2).toString().replace(".", ",")}</td>
-                                            <td>{item.nome}</td>
-                                            <td className="w-25">
-                                                <input id="valor" type="number" pattern="[0-9]+$" onBlur={(e) => quantidade(item.id, e.target.value)} className="form-control input-sm" defaultValue={item.qtd} min="0" />
+                        <Container className="table-striped ">
 
-                                            </td>
-                                            <td>R$ {item.subtotal.toFixed(2).toString().replace(".", ",")}</td>
-                                            <td className='col-sm-2'>
-                                                <Button variant="outline-danger" onClick={() => remover(item.id)}>X</Button>
-                                            </td>
-                                        </tr>
-                                    )}
-                            </tbody>
-                        </Table>
+                            <Row>
+                                <Col><strong>Foto</strong></Col>
+                                <Col><strong>Preço</strong></Col>
+                                <Col><strong>Produto</strong></Col>
+                                <Col><strong>Quantidade</strong></Col>
+                                <Col><strong>Subtotal</strong></Col>
+                                <Col><strong>Remover</strong></Col>
+                            </Row>
+                            {
+
+                                itens.map((item) =>
+                                    <Row key={Math.random()}>
+                                        <Col><img style={{ width: 60 }} src={"https://doceria.s3.sa-east-1.amazonaws.com/" + item.imagem} /></Col>
+                                        <Col>R$ {item.preco.toFixed(2).toString().replace(".", ",")}</Col>
+                                        <Col>{item.nome}</Col>
+                                        <Col className="w-25">
+                                            <input id="valor" type="number" pattern="[0-9]+$" onBlur={(e) => quantidade(item.id, e.target.value)} className="form-control input-sm" defaultValue={item.qtd} min="0" />
+
+                                        </Col>
+                                        <Col>R$ {item.subtotal.toFixed(2).toString().replace(".", ",")}</Col>
+                                        <Col className='col-sm-2'>
+                                            <Button variant="outline-danger" onClick={() => remover(item.id)}>X</Button>
+                                        </Col>
+                                    </Row>
+                                )}
+
+                        </Container>
                         <h3><strong>TOTAL:</strong> R$ {total.toFixed(2).toString().replace(".", ",")}</h3>
                     </Modal.Body>
                     <Modal.Footer>
-                        <Button variant="secondary" onClick={handleClose}>
+                        <Button variant="secondary" onClick={() => finish(0)}>
                             Continuar Comprando
                         </Button>
-                        <Button variant="outline-success" onClick={() => finish()}>Finalizar Compra</Button>                      
+                        <Button variant="outline-success" onClick={() => finish(1)}>Finalizar Compra</Button>
                     </Modal.Footer>
                 </Modal>
 

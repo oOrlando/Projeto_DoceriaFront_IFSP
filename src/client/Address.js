@@ -1,7 +1,7 @@
 import HeaderStore from './HeaderStore'
 import ApiEndereco from '../apis/ApiEndereco';
 import React, { useState, useEffect } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 
 function Address() {
 
@@ -12,6 +12,7 @@ function Address() {
     }, [])
 
     let user = JSON.parse(localStorage.getItem("user-info"))
+    const { ca } = useParams();
     const navegate = useNavigate();
 
     const [logradouro, setLogradouro] = useState("")
@@ -35,9 +36,13 @@ function Address() {
 
         ApiEndereco.cadastra(registro)
 
-        
+        if (ca == null){
+            navegate("/")
 
-        navegate("/")
+        }else{
+            navegate("/request")
+
+        }    
 
     }
 

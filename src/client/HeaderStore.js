@@ -1,17 +1,23 @@
-import { Container, Navbar, Nav, NavDropdown, Form, FormControl, Button, Carousel } from 'react-bootstrap'
+import { Container, Navbar, Nav, NavDropdown, Carousel, OverlayTrigger, Tooltip, Form, FormControl, Button } from 'react-bootstrap'
 import { useNavigate } from 'react-router-dom'
 import { GrUserAdd, GrUserExpert } from "react-icons/gr";
 import { BsFillCartFill } from "react-icons/bs";
-
+import { useState } from 'react';
 
 
 function HeaderStore() {
-  
-    const navegate = useNavigate();
 
-    function Logout(){
+    const navegate = useNavigate();
+    const [key, setKey] = useState('')
+    let user = JSON.parse(localStorage.getItem("user-info"))
+
+    function Logout() {
         localStorage.clear();
-        navegate("/")   
+        navegate("/")
+    }
+
+    function search() {
+        navegate("/" + key)
     }
 
     return (
@@ -26,46 +32,57 @@ function HeaderStore() {
                             <Nav className="me-auto my-2 my-lg-0" style={{ maxHeight: '100px' }} navbarScroll>
                                 <Nav.Link href="/">Home</Nav.Link>
                                 <Nav.Link href="#action2">Quem somos</Nav.Link>
-                                <NavDropdown title="Produtos" id="navbarScrollingDropdown">
-                                    <NavDropdown.Item href="#action3">Doces</NavDropdown.Item>
-                                    <NavDropdown.Item href="#action4">Bebidas</NavDropdown.Item>
-                                    <NavDropdown.Divider />
-                                    <NavDropdown.Item href="#action5">Promoções</NavDropdown.Item>
-                                </NavDropdown>
-
+                                <Nav.Link href="#action2">Produtos</Nav.Link>
                             </Nav>
-                            
-                            {
-                            !localStorage.getItem('user-info') ?
-                            <>
-                            <NavDropdown id="navbarScrollingDropdown" title= {<GrUserAdd size="25" />} >
-                                <NavDropdown.Item href="/login">Login</NavDropdown.Item>
-                                <NavDropdown.Item href="/register">Cadastrar</NavDropdown.Item>
-                             </NavDropdown>
-                       
-                            </>
-                            :
-                            <>
-                            <NavDropdown id="navbarScrollingDropdown" title= {<GrUserExpert size="25"/>} >
-                                <NavDropdown.Item onClick={Logout}>Sair</NavDropdown.Item>
-                            </NavDropdown>
-                         
-                            </>                      
-                            
-                            }
-                            
-                            <Nav.Link href="#action6"><BsFillCartFill size="25" color="black" /></Nav.Link>
 
-                            <Form className="d-flex">
-                                <FormControl type="search" placeholder="Pesquisar" className="me-2" aria-label="Pesquisar" />
-                                <Button variant="outline-dark">Pesquisar</Button>
+                            {
+                                !localStorage.getItem('user-info') ?
+                                    <>
+
+                                        <NavDropdown id="navbarScrollingDropdown" title={<GrUserAdd size="25" />} >
+                                            <NavDropdown.Item href="/login">Login</NavDropdown.Item>
+                                            <NavDropdown.Item href="/register">Cadastrar</NavDropdown.Item>
+                                        </NavDropdown>
+
+                                    </>
+                                    :
+                                    <>
+                                        <Navbar.Brand>Olá {user && user.nome}</Navbar.Brand>
+                                        <NavDropdown id="navbarScrollingDropdown" title={<GrUserExpert size="25" />}>
+                                            <NavDropdown.Item onClick={Logout}>Sair</NavDropdown.Item>
+                                        </NavDropdown>
+                                        <OverlayTrigger key='bottom' placement='bottom' overlay={
+                                            <Tooltip id={`tooltip-bottom`}>
+                                                {localStorage.getItem('itens-info') ?
+                                                    <>
+                                                        {parseInt(localStorage.getItem('itens-info').length)}  PRODUTOS
+                                                    </>
+                                                    :
+                                                    <>
+                                                        CARRINHO VAZIO
+                                                    </>
+                                                }
+
+                                            </Tooltip>
+                                        }
+                                        >
+                                            <Nav.Link href="#action6"><BsFillCartFill size="25" color="black" /></Nav.Link>
+                                        </OverlayTrigger>
+
+                                    </>
+
+                            }
+
+                            <Form className="d-flex" onSubmit={() => (search())}>
+                                <FormControl type="search" onChange={(e) => setKey(e.target.value)} placeholder="Pesquisar" className="me-2" aria-label="Pesquisar" />
+                                <Button type="submit" variant="outline-dark">Pesquisar</Button>
                             </Form>
 
                         </Navbar.Collapse>
                     </Container>
                 </Navbar>
-            </div>
-            <div>
+
+
                 <Carousel>
                     <Carousel.Item>
                         <img

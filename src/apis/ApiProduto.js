@@ -9,9 +9,7 @@ const ApiProduto = {
             body: formData
         })
 
-        return result;
-           
-          
+        return result;         
     },
 
     list:async() => {
@@ -34,6 +32,24 @@ const ApiProduto = {
         result = await result.json();
         return result
 
+    },
+    getProduct:async(id) => {
+        let result = await fetch(apiBase+"getProduct/"+ Number.parseInt(id));
+        result = await result.json();
+        return result
+
+    },
+
+    update:async(id, formData) => {
+        let result = await fetch(apiBase+"updateProduct/"+id+"?_method=PUT", {
+            method: "POST",
+            body: formData
+        })
+
+        return result;         
     }
+
+
+
 }
 export default ApiProduto
