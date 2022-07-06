@@ -8,7 +8,7 @@ import { IoIosCard } from "react-icons/io";
 import { IoQrCodeSharp } from "react-icons/io5";
 import { ImBarcode } from "react-icons/im";
 import ApiItens from '../apis/ApiItens';
-
+import Footer from './Footer'
 
 
 function Request() {
@@ -221,6 +221,7 @@ function Request() {
                 }
 
             </div>
+            <Footer />
         </>
 
     )
