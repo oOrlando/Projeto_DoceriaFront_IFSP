@@ -2,6 +2,7 @@ import HeaderStore from './HeaderStore'
 import ApiEndereco from '../apis/ApiEndereco';
 import React, { useState, useEffect } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
+import Footer from './Footer'
 
 function Address() {
 
@@ -80,7 +81,7 @@ function Address() {
                     <button type="submit" className="btn btn-primary">Cadastrar</button>
                 </form>
             </div>
-
+            <Footer />
         </>
     )
 }
