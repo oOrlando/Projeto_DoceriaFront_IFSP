@@ -38,7 +38,7 @@ function Store() {
         if (key == null) {
             let result = await ApiProduto.list();
             setData(result)
-        }else {
+        } else {
             let result = await ApiProduto.seach(key);
             setData(result)
         }
@@ -126,26 +126,32 @@ function Store() {
     }
 
     async function finish(nav) {
-        let now = new Date()
-        let mes = parseInt(now.getMonth()) + 1
-        let datacompra = (now.getFullYear() + "-" + mes + "-" + now.getDate())
+        if (itens.length) {
+            let now = new Date()
+            let mes = parseInt(now.getMonth()) + 1
+            let datacompra = (now.getFullYear() + "-" + mes + "-" + now.getDate())
 
-        let situacao = "carrinho";
+            let situacao = "carrinho";
 
-        /* let usuario_id = Number(user.id)  */
+            /* let usuario_id = Number(user.id)  */
 
-        let valor = total
-        let registro = { datacompra, valor, situacao/* , usuario_id */ }
+            let valor = total
+            let registro = { datacompra, valor, situacao/* , usuario_id */ }
 
-        localStorage.setItem("request-info", JSON.stringify(registro));
-        localStorage.setItem("itens-info", JSON.stringify(itens));
-        /* ApiPedido.register(registro) */
-        if (nav === 0) {
-            handleClose()
+            localStorage.setItem("request-info", JSON.stringify(registro));
+            localStorage.setItem("itens-info", JSON.stringify(itens));
+            /* ApiPedido.register(registro) */
+            if (nav === 0) {
+                handleClose()
+
+            } else {
+                navegate("/request")
+            }
 
         } else {
-            navegate("/request")
+            handleClose()
         }
+
 
     }
 
