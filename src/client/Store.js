@@ -7,7 +7,6 @@ import { React, useState, useEffect } from 'react'
 import ApiProduto from '../apis/ApiProduto'
 /* import ApiPedido from '../apis/ApiPedido' */
 import { useNavigate, useParams } from 'react-router-dom'
-import Footer from './Footer'
 
 function Store() {
 
@@ -235,7 +234,6 @@ function Store() {
                 </Modal>
 
             </div>
-            <Footer />
         </>
 
     )
