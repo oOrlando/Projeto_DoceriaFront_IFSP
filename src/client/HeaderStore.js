@@ -2,14 +2,15 @@ import { Container, Navbar, Nav, NavDropdown, Carousel, OverlayTrigger, Tooltip,
 import { useNavigate } from 'react-router-dom'
 import { GrUserAdd, GrUserExpert } from "react-icons/gr";
 import { BsFillCartFill } from "react-icons/bs";
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 
-function HeaderStore() {
+function HeaderStore({abremodal}) {
 
     const navegate = useNavigate();
     const [key, setKey] = useState('')
     let user = JSON.parse(localStorage.getItem("user-info"))
+
 
     function Logout() {
         localStorage.clear();
@@ -18,6 +19,11 @@ function HeaderStore() {
 
     function search() {
         navegate("/" + key)
+    }
+
+    async function count(){
+       
+        
     }
 
     return (
@@ -31,8 +37,8 @@ function HeaderStore() {
                         <Navbar.Collapse id="navbarScroll">
                             <Nav className="me-auto my-2 my-lg-0" style={{ maxHeight: '100px' }} navbarScroll>
                                 <Nav.Link href="/">Home</Nav.Link>
-                                <Nav.Link href="#action2">Quem somos</Nav.Link>
-                                <Nav.Link href="#action2">Produtos</Nav.Link>
+                                <Nav.Link href="/quem">Quem somos</Nav.Link>
+                                <Nav.Link href="/">Produtos</Nav.Link>
                             </Nav>
 
                             {
@@ -43,19 +49,31 @@ function HeaderStore() {
                                             <NavDropdown.Item href="/login">Login</NavDropdown.Item>
                                             <NavDropdown.Item href="/register">Cadastrar</NavDropdown.Item>
                                         </NavDropdown>
+                                        
 
                                     </>
                                     :
                                     <>
                                         <Navbar.Brand>Olá {user && user.nome}</Navbar.Brand>
                                         <NavDropdown id="navbarScrollingDropdown" title={<GrUserExpert size="25" />}>
+                                        <NavDropdown.Item href="/perfil">Minha Conta</NavDropdown.Item>
+                                        <NavDropdown.Item href="/compras">Meus Pedidos</NavDropdown.Item>
                                             <NavDropdown.Item onClick={Logout}>Sair</NavDropdown.Item>
                                         </NavDropdown>
-                                        <OverlayTrigger key='bottom' placement='bottom' overlay={
+                                        
+
+                                    </>
+
+                            }
+                            <OverlayTrigger key='bottom' placement='bottom' overlay={
                                             <Tooltip id={`tooltip-bottom`}>
                                                 {localStorage.getItem('itens-info') ?
                                                     <>
-                                                        {parseInt(localStorage.getItem('itens-info').length)}  PRODUTOS
+                                                       {
+                                                           JSON.parse(localStorage.getItem('itens-info')).map((itens) =>
+                                                           <p key={Math.random()}>{itens.qtd} - {itens.nome}</p>
+                                                           )
+                                                        }
                                                     </>
                                                     :
                                                     <>
@@ -66,17 +84,14 @@ function HeaderStore() {
                                             </Tooltip>
                                         }
                                         >
-                                            <Nav.Link href="#action6"><BsFillCartFill size="25" color="black" /></Nav.Link>
+                                            <Button  onClick={() => abremodal(true)}><BsFillCartFill size="25" color="black"/></Button>
                                         </OverlayTrigger>
-
-                                    </>
-
-                            }
 
                             <Form className="d-flex" onSubmit={() => (search())}>
                                 <FormControl type="search" onChange={(e) => setKey(e.target.value)} placeholder="Pesquisar" className="me-2" aria-label="Pesquisar" />
                                 <Button type="submit" variant="outline-dark">Pesquisar</Button>
                             </Form>
+                            
 
                         </Navbar.Collapse>
                     </Container>
