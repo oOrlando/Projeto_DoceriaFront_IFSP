@@ -11,6 +11,7 @@ import ApiItens from '../apis/ApiItens';
 import Footer from './Footer'
 
 
+
 function Request() {
 
 
@@ -40,38 +41,39 @@ function Request() {
     async function registerPedido() {
         let user = JSON.parse(localStorage.getItem('user-info'));
         if (localStorage.getItem('user-info') && localStorage.getItem('itens-info')) {
-
+       
             let datacompra = pedido.datacompra
             let valor = pedido.valor
             let situacao = pedido.situacao
             let usuario_id = user.id
             let res = { datacompra, valor, situacao, usuario_id, forma_pagamento_id }
-            console.warn(res)
-            let request = await ApiPedido.register(res)
+            let request = await ApiPedido.register(res)              
+  
+                registerItens(request.id)
+                navegate("/compras")           
 
-            registerItens(request.id)
         } else {
             alert("carrinho vazio")
         }
+       
 
     }
 
     async function registerItens(id) {
-    
-            let pedido_id = id;
-            console.warn(pedido_id)
-            for (let i = 0; itens.length; i++) {
-                let produto_id = itens[i].id;
-                let qtd = itens[i].qtd;
-                let valor = itens[i].subtotal
 
-                let res = { pedido_id, produto_id, qtd, valor }
-                console.warn(res)
-                ApiItens.register(res)
-                localStorage.removeItem('request-info')
-                localStorage.removeItem('itens-info')
-            }
-        
+        let pedido_id = id;
+        for (let i = 0; itens.length; i++) {
+            let produto_id = itens[i].id;
+            let qtd = itens[i].qtd;
+            let valor = itens[i].subtotal
+
+            let res = { pedido_id, produto_id, qtd, valor }
+            ApiItens.register(res)
+            localStorage.removeItem('request-info')
+            localStorage.removeItem('itens-info')
+        }
+       
+
     }
 
     async function login() {
@@ -220,7 +222,7 @@ function Request() {
                         </>
                 }
 
-            </div>
+            </div><br />
             <Footer />
         </>
 
