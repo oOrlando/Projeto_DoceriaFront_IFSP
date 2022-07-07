@@ -1,7 +1,8 @@
 import Header from './Header'
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import ApiProduto from '../apis/ApiProduto';
+import ApiProduto from '../apis/ApiProduto'
+import Footer from '../client/Footer'
 
 function AddProduct() {
 
@@ -62,7 +63,8 @@ function AddProduct() {
                         <button type='submit' className="btn btn-primary">Cadastrar</button>
                     </form>
                 </div>
-            </div>
+            </div><br />
+            <Footer />
         </>
     )
 }
