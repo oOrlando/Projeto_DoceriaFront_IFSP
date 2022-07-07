@@ -2,6 +2,7 @@ import Header from './Header'
 import { useParams, useNavigate } from 'react-router-dom'
 import { useState, useEffect } from 'react'
 import ApiProduto from '../apis/ApiProduto';
+import Footer from '../client/Footer'
 
 function UpdateProduct() {
     const { id } = useParams();
@@ -79,7 +80,8 @@ function UpdateProduct() {
                         <button type="submit" className="btn btn-success">Atualizar</button>
                     </form>
                 </div>
-            </div>
+            </div><br />
+            <Footer />
         </>
     )
 }
