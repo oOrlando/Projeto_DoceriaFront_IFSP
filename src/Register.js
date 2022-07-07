@@ -4,6 +4,7 @@ import HeaderStore from './client/HeaderStore'
 import ApiUsuario from './apis/ApiUsuario';
 import React ,{useState, useEffect} from 'react'
 import {useNavigate, useParams} from 'react-router-dom'
+import Footer from './client/Footer'
 
 function Register()
 {
@@ -103,7 +104,8 @@ function Register()
                 <br />  
                 <button type="submit" className="btn btn-primary">Cadastrar</button>   
             </form> 
-        </div>
+        </div><br />
+        <Footer />
            
         </>
     )
