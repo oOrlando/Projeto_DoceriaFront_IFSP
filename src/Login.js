@@ -4,6 +4,7 @@ import ApiUsuario from './apis/ApiUsuario';
 import React, { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { FloatingLabel } from 'react-bootstrap'
+import Footer from './client/Footer'
 
 function Login() {
     const navegate = useNavigate();
@@ -21,10 +22,8 @@ function Login() {
     }, [])
 
     async function login() {
-        console.warn(email, senha)
         let registro = { email, senha };
-        const result = await ApiUsuario.login(registro);
-        console.warn(result)        
+        const result = await ApiUsuario.login(registro);      
         if (result.id) {
             localStorage.setItem("user-info", JSON.stringify(result));
             navegate("/admin")
@@ -62,7 +61,8 @@ function Login() {
                     <br />
                     <button className='btn btn-primary' onClick={login}>Entrar</button>
                 </div>
-            </div>
+            </div><br />
+            <Footer />
         </>
     )
 }
