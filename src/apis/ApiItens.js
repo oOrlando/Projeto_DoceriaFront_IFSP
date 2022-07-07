@@ -15,6 +15,12 @@ const ApiItens = {
 
         result = await result.json()  
         return result
+    },
+    searchItens:async(id) => {
+        let result = await fetch(apiBase+"searchItens/"+id);
+        result = await result.json();
+        return result
+
     }
 
 }
