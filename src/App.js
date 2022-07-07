@@ -12,6 +12,9 @@ import Protected from './admin/Protected';
 import ProductList from './admin/ProductList';
 import Address from './client/Address';
 import Request from './client/Request';
+import Compras from './client/Compras';
+import userUpdate from './userUpdate';
+import Quem from './Quem';
 
 import Store from './client/Store';
 
@@ -26,15 +29,18 @@ function App() {
           <Route path="/register" element={<Protected Cmp={Register} />} >
             <Route path="/register/:ca" element={<Protected Cmp={Register} />} />
           </Route>
+          <Route path="/perfil" element={<Protected Cmp={userUpdate} />} />
           <Route path="/admin" element={<Protected Cmp={ProductList} />} />
           <Route path="/update/:id" element={<Protected Cmp={UpdateProduct} />} />
           <Route path="/add" element={<Protected Cmp={AddProduct} />} />
+          <Route path="/quem" element={<Protected Cmp={Quem} />} />
           
           <Route path="/address" element={<Protected Cmp={Address} />}>
             <Route path="/address/:ca" element={<Protected Cmp={Address} />} />
           </Route>
          
          <Route path="/request" element={<Protected Cmp={Request} />} />
+         <Route path="/compras" element={<Protected Cmp={Compras} />} />
 
           <Route path="/" element={<Store />} >
             <Route path='/:key' element={<Store />} />
