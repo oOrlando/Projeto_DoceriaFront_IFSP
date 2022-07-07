@@ -3,6 +3,7 @@ import ApiProduto from '../apis/ApiProduto.js'
 import {React, useState, useEffect} from 'react'
 import { Col, Row, Container, Button } from 'react-bootstrap'
 import {Link, useNavigate} from 'react-router-dom'
+import Footer from '../client/Footer'
 
 
 function ProductList() {
@@ -94,12 +95,14 @@ function ProductList() {
                             </Row>
                         )
                     }
-                   
-                </Container>
+                  
+                </Container><br />
+                <Footer />
    
 
 
         </div>
+      
     )
 }
 
