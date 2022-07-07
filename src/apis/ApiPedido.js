@@ -17,16 +17,8 @@ const ApiPedido = {
         return result
         
     },
-
-    list:async() => {
-
-        let result = await fetch(apiBase+"listPedido");
-        result = await result.json();
-        return result;
-    },
-
-    seach:async(key) => {
-        let result = await fetch(apiBase+"searchPedido/"+key);
+    searchPedido:async(id) => {
+        let result = await fetch(apiBase+"searchPedido/"+id);
         result = await result.json();
         return result
 
