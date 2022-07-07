@@ -7,6 +7,7 @@ import { React, useState, useEffect } from 'react'
 import ApiProduto from '../apis/ApiProduto'
 /* import ApiPedido from '../apis/ApiPedido' */
 import { useNavigate, useParams } from 'react-router-dom'
+import Footer from './Footer'
 
 function Store() {
 
@@ -27,7 +28,7 @@ function Store() {
     useEffect(() => {
         getData()
 
-    }, [total])
+    }, [total,show])
 
 
     async function getData() {
@@ -44,6 +45,10 @@ function Store() {
         }
 
 
+    }
+
+    async function abremodal(child){
+        setShow(child)
     }
 
     async function cart(item) {
@@ -160,7 +165,7 @@ function Store() {
     return (
 
         <>
-            <HeaderStore />
+            <HeaderStore abremodal={abremodal} />
             <div>
                 <h3>Vitrine de produtos</h3>
                 <Container>
@@ -233,7 +238,8 @@ function Store() {
                     </Modal.Footer>
                 </Modal>
 
-            </div>
+            </div><br />
+            <Footer />
         </>
 
     )
