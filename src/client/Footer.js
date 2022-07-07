@@ -12,29 +12,29 @@ function Footer() {
         </Row>
         <Row>
         <Col className="text-center py-3">
-           <h6>Entre em contato pelo nosso WhatsApp <BsWhatsapp /> (15) 99999-9999</h6>
+           <h6>Entre em contato pelo nosso WhatsApp <BsWhatsapp size="25"/> (15) 99999-9999</h6>
             </Col> 
         </Row>
         <Row>
             <h6>Nossas Redes Sociais</h6>
             <Col className="text-center py-3">
-            <BsYoutube />
+            <BsYoutube size="25"/>
             </Col> 
 
             <Col className="text-center py-3">
-            <BsTwitter />
+            <BsTwitter size="25"/>
             </Col> 
 
             <Col className="text-center py-3">
-            <BsTwitch />
+            <BsTwitch size="25"/>
             </Col> 
 
             <Col className="text-center py-3">
-            <BsPinterest />
+            <BsPinterest size="25"/>
             </Col> 
 
             <Col className="text-center py-3">
-            <BsInstagram />
+            <BsInstagram size="25"/>
             </Col>             
 
     {/* Footer do Footer*/}
