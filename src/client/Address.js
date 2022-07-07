@@ -80,8 +80,9 @@ function Address() {
                     <br />
                     <button type="submit" className="btn btn-primary">Cadastrar</button>
                 </form>
-            </div>
+            </div><br />
             <Footer />
+
         </>
     )
 }
